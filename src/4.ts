@@ -3,36 +3,26 @@ class Key {
   constructor() {
     this.signature = Math.random();
   }
-  getSignature() {
+  getSignature(): number {
     return this.signature;
   }
 }
 
 class Person {
-  private key: Key;
-  constructor(key: Key) {
-    this.key = key;
-  }
-  getKey() {
+  constructor(private key: Key) {}
+  getKey(): Key {
     return this.key;
   }
 }
 
 abstract class House {
-  protected door: boolean;
-  protected key: Key;
-  tenants: Person[] = [];
+  protected door: boolean = false;
+  private tenants: Person[] = [];
 
-  constructor(key: Key) {
-    this.door = false;
-    this.key = key;
-  }
+  constructor(protected key: Key) {}
 
   comeIn(person: Person): void {
-    if (
-      this.door &&
-      this.key.getSignature() === person.getKey().getSignature()
-    ) {
+    if (this.door) {
       this.tenants.push(person);
       console.log("Person can come in house");
     } else {
